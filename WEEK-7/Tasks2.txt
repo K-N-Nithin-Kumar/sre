@@ -1,0 +1,147 @@
+                                    ------------------------------------------ CLUSTERS ------------------------------------     
+=> Post Confuguring the /etc/hosts file and adding the erlang cookie.
+=> The Cluster were created.
+=> VM-1 (ans22@192.168.1.38) was the Master Node
+=> VM-2 (ans40@192.168.1.49 ) was the Slave-1
+=> VM-3(ans43@192.168.1.50) was the Slave-2
+
+
+
+=> Before adding the rabbitmq app was stopped in both VM-2 and VM-3
+
+=>
+---
+- name: RMQ
+  hosts: all2 //all 3
+  become: true
+  become_method: sudo
+  tasks:
+  - name: stop rabbitmq app
+    command: rabbitmqctl stop_app
+
+
+                                    ------------------------------------------ ADDING CLUSTERS ------------------------------------   
+
+=> To the VM-2 and VM-3
+=>
+
+---
+- name: RMQ
+  hosts: all2        // and all3
+  become: true
+  become_method: sudo
+  tasks:
+  - name: stop rabbitmq app
+    command: rabbitmqctl stop_app
+
+  - name: add this node to cluster                                                  // Command to join the cluster named "rabbit@ans22" on the Vm's Vm-2 and VM-3
+    command: rabbitmqctl join_cluster rabbit@ans22
+
+  - name: start rabbitmq app
+    command: rabbitmqctl start_app
+
+
+                                 ------------------------------------------ ENABLE MANAGEMENT PLUGINS ------------------------------------  
+=> To enable management plugins.
+=> Master node was considered in the cluster. (VM-1 (ans22@192.168.1.38))
+
+=>
+---
+- name: RMQ
+  hosts: all1
+  become: true
+  become_method: sudo
+  tasks:
+    - name: Enables the rabbitmq_management plugin                                   // Command to enable management plugin. 
+      rabbitmq_plugin:
+        names: rabbitmq_management
+      state: enabled
+
+=> Post enabling this the guest can login in the Application UI ( via Vm-1 Bridged adapter IP)
+=> In the browser (192.168.43.60:15672)   => login as guest for now since users have not been added.
+
+
+                                     ------------------------------------------CREATE VHOSTS------------------------------------                                   
+
+=> Create a vhost and a user with read-write permissions to the vhost
+=> In this step a Vhost was created and the user was added under this Vhost
+
+=>
+---
+- name: RMQ
+  hosts: all1
+  become: true
+  become_method: sudo
+  tasks:
+   - name:add vhost 
+     rabbitmq_host:
+       name: kanakaraju                             // Adding Vhost named kanakaraju
+       state: present
+
+   - name: Add user
+      rabbitmq_user:
+        user: raju5
+        password: raju5                            // The user named raju5 was added under Vhost and had Read and Write priviliges
+        vhost: kanakaraju
+        read_priv: .*
+        write_priv: .*
+        state: present
+
+         
+                                             ------------------------------------------USER WITH MONITORING------------------------------------     
+
+=>Create a user with monitoring access
+=>A user with montoring access was some priviliges like
+
+View other users's connections and channels
+View node-level data such as memory use and clustering
+View truly global statistics for all virtual hosts
+
+=>
+---
+- name: RMQ
+  hosts: all1
+  become: true
+  become_method: sudo
+  tasks:
+   - name: Add monitoring user
+      rabbitmq_user:                                                                // raju3 is the user created with password raju3 with monitoring access.
+        user: raju3
+        password: raju3
+       permissions:
+          - vhost: /
+            configure_priv: .* 
+            read_priv: .* 
+            write_priv: .*
+            tags: monitoring                                                        // tags: monitoring          
+            state: present
+
+
+
+                                ------------------------------------------ DATA PERSISTENCE ------------------------------------   
+=> For data being persistent created a durable queue and published messages.
+=> This says that the messages post turning off the App Ui and logging in again the messages were being seen.
+
+=>
+---
+- name: RMQ
+  hosts: all1
+  become: true
+  become_method: sudo
+  tasks:
+  - name: Adding RabbitMQ queues.
+    rabbitmq_queue:
+      name: Queue1
+      durable: yes                                                                           // Creating the queue as 'Queue-1' and setting the durable =yes
+      login_user: raju5
+      login_password: raju5
+  
+  
+  - name: Publish a message
+   - rabbitmq_publish:
+       url: "amqp://raju5:raju5@192.168.43.35:5672/kanakaraju"                           // Queue1 location and the Vhost name
+       queue: 'Queue1'
+       body: "Hello world from ansible module rabbitmq_publish"                         // Publish some message.
+       content_type: "text/plain"
+       headers:
+         myHeader: myHeaderValue
