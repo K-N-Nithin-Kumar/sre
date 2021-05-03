@@ -16,3 +16,5 @@ TASK-6 => Write a script to collect the metrics previously collected by collectd
 TASK-7 =>The metrics should go to influxdb from riemann
 
 TASK-8 =>metrics such as disk usage/ram usage/HWM etc should have a threshold (80%) and should send a critical alert to riemann once the threshold is breached.
+
+Task-9 => Nagios Monitoring.
