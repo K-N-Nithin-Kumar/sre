@@ -1,7 +1,7 @@
 # DB Basics 
 
 TASK-1 => On a standalone VM, install MariaDB 10.5.6 and create a user same as your laptop login user.
-          create database Nginx and restore the SQL file attached in the mail.
+          create database Nginx and restore the SQL file attached in the mail (Was Copied).
           
   ```
  =>Step 1: Update System 
