@@ -12,7 +12,7 @@ Task-4
 =>Create a vhost and a user with read-write permissions to the vhost
 
 Task-5
-=>Create a user with monitoring access
+=>Create a user with monitoring access.
 
 Task-6
 =>Add rabbitmq_management plugins.
