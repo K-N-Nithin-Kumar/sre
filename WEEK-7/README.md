@@ -15,4 +15,4 @@ Task-5
 =>Create a user with monitoring access
 
 Task-6
-=>Add rabbitmq_management plugins
+=>Add rabbitmq_management plugins.
