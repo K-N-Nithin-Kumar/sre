@@ -97,7 +97,7 @@ and advertise their own loopback(IP on its lo interface ) to vm-router.
 => In all vm's used IP Prefixx list as OUT and In
 =>
 (config)#ip prefix-list DEFAULT seq 10 permit 0.0.0.0/0      // This can be replaced b Vm's IP address
-=>  (config-router)#network 10.1.1.2/32     // in vm-1      // Advertised it's own loopback ip's in all the Vm's as same
+=>  (config-router)#network 10.1.1.2/32     // in vm-1     // Advertised it's own loopback ip's in all the Vm's as same
 
 => The same thing was done is all the VM's
 
