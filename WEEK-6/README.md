@@ -40,4 +40,4 @@ Task-13
 =>Delete the messages from the DATA_SIDELINE queue using RMQ API/curl.
 
 Task-14
-=>Push the messages to DATA queue using RMQ API/curl
+=>Push the messages to DATA queues using RMQ API/curl
