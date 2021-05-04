@@ -53,7 +53,7 @@ d-i user-setup/encrypt-home boolean false
 d-i passwd/user-default-groups vagrant sudo
 d-i passwd/user-uid string 900
 
-The above code must be hhtp folder where preseed.cong file exists.
+The above code must be hhtp folder where preseed.cong file existS.
 
 
 
