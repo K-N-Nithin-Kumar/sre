@@ -98,7 +98,7 @@ Here we see Conflicting values of course_name and course_lecturer in 3,5 where t
    => Can be  determined the Non prime attribute ( i.e course_name and course_lecturer)
    => Since, This is conflicting we have the Prime Attribute which is used to differentiate between them.
 
-   => That is how the third Normal Form can be  Achived.
+   => That is how the third Normal Form can be Achived.
 
 ```
 
