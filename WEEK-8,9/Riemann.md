@@ -245,6 +245,6 @@ with QueuedClient(TCPTransport("192.168.43.173", 5555)) as client:
   state = "ok"
   if ff > warning3: state="warning"
   if ff > critical3: state="critical"
-  client.event(service="virtual mem", metric_f=ff,ttl=120,state=state) 
+  client.event(service="virtual mem", metric_f=ff,ttl=120,state=state).
 ```
   
