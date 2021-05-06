@@ -76,6 +76,7 @@ The Fouth VM
 ```
 
 ```
+=> write memory (To save)
 => To check (sh ip bgp summary) => Shows the BGP summary 
 => Basic BGP level is setup
 ```
