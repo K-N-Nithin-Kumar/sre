@@ -85,15 +85,16 @@ STEP-2 => Post startingg the dashboard.
         => Since the metrices of all th ethings keep changing in order to make them dynamic.
              =>import os
                os.system("sh script.sh") 
-        =>     The contents of script.sh had the curl request in it.
+        =>     The contents of script.sh had the curl request in it. 
+                Code in RMQMetric.py
 
 
------CODE--------
 
+```
  
  ### THE METRICS SHOULD GO TO INFLUXDB FROM RIEMANN
- ```
- 
+
+```
 => To send the riemann metrics to influxdb in the RIEMANN-SERVER VM there was a configuration file
 
 => In the Config file 
@@ -113,53 +114,3 @@ STEP-2 => Post startingg the dashboard.
 => and then log into the influxdb database VM and check the metrics being transferred from riemann server
 => The metrices collected on influxDb can be Plotted on grafana dashboard as well.
 ```
-### THRESHOLD LIMIT
-```
-
-=>metrics such as disk usage/ram usage should have a threshold (80%) and should send a critical alert to riemann once the threshold is breached.
-=> For this task the script was written as follows.
-
-=> Some of the metrics collected by python psutils was considered and tags like warning and critical was issuued based on some values.
-
-=> The python script looked like this.
-
-=>
-import psutil as p
-from riemann_client.transport import TCPTransport
-from riemann_client.client import QueuedClient
-with QueuedClient(TCPTransport("192.168.43.173", 5555)) as client:
-
-
-  c = p.cpu_times()
-  warning1 = 0.9
-  critical1 = 0.95
-  
-  c = psutil.cpu_times()
-  used = c.user + c.system + c.nice
-  total = used + c.idle
-  f = used/total                                  // Certain limit was considered and then added based on the metrics generated
-  state = "ok"                                    // If condition was taken where "warning" or "critical" would be considered.    
-  if f > warning1: state="warning"
-  if f > critical1: state="critical" 
-  client.event(service="Cpu_times", metric_f=f,ttl=120,state=state) 
-
- warning2 = 3
-  critical2 = 8
-  l = os.getloadavg()
-  f = psutil.cpu_count()
-  f1 = l[2]/f
-  state = "ok"
-  if f1 > warning2: state="warning"
-  if f1 > critical2: state="critical" 
-  client.event(service="op_cpu", metric_f=f1,ttl=120,state=state) 
-  
-  warning3 = 0.85
-  critical3 = 0.95
-  a = psutil.virtual_memory()
-  ff = a.percent / 100.0
-  state = "ok"
-  if ff > warning3: state="warning"
-  if ff > critical3: state="critical"
-  client.event(service="virtual mem", metric_f=ff,ttl=120,state=state).
-```
-  
