@@ -1,9 +1,24 @@
 # NAMESPACES
-
+ 
    ``` 
    Namespaces are a feature of the Linux kernel that partitions kernel resources such that one set of processes sees one set of resources.
    And another set of processes sees a different set of resources.
    ```
+   ```
+In Linux, namespaces are used to provide isolation for objects from other objects. 
+So that anything will happen in namespaces will remain in that particular namespace and doesn’t affect other objects of other namespaces. 
+
+For example:- we can have the same type of objects in different namespaces as they are isolated from each other.
+In short, due to isolation, namespaces limits how much we can see.
+
+```
+   
+   
+   
+   
+   
+   
+   
    
    ```
    The feature works by having the same namespace for a group of resources and processes, but those namespaces refer to distinct resources.
