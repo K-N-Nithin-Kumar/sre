@@ -72,6 +72,7 @@ def tick():
         memory()
         load()
         disk()
+        
     except Exception, e:
         print "Exception: %s" % e
 def run():
