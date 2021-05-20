@@ -52,4 +52,4 @@ STEP-1=> the script send.py
         client.event(service="Used", metric_f=w,ttl=120) 
 
 
-        client.flush()                                     //flush() method to send the current event queue as a single message
+        client.flush()                                     //flush() method is used to send the current event queue as a single message
