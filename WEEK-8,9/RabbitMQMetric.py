@@ -7,7 +7,7 @@ from riemann_client.client import QueuedClient
 with QueuedClient(TCPTransport("192.168.43.173", 5555)) as client:
 
 
-  with open('payload.json') as json_file:                             // Extracting the data of payload.json_file
+  with open('payload1.json') as json_file:                             // Extracting the data of payload.json_file
     data = json.load(json_file)
 
   a = data['messages_details']
@@ -29,5 +29,4 @@ with QueuedClient(TCPTransport("192.168.43.173", 5555)) as client:
   
   
   // From the requested curl request the other metrics can also be added which can also be used 
-  
-  
+      curl --silent -u raju:raju -X GET http://192.168.43.71:15672/api/overview -o payload1.json 
