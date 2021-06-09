@@ -1,4 +1,4 @@
-TASK -3 =>Convert this setup into two nodes Galera clusters and then add another node to this cluster
+* TASK -3 =>Convert this setup into two nodes Galera clusters and then add another node to this cluster
 
 ```
 
@@ -36,7 +36,7 @@ wsrep_sst_method=rsync
 wsrep_node_address="192.168.1.4"
 wsrep_node_name="Node_1" 
 ```
-KEY-POINTS
+* KEY-POINTS
 ```
  “Galera Provider Configuration” 
  section configures the MariaDB components that provide a WriteSet replication API. 
@@ -57,8 +57,8 @@ clarifies the IP address and the name of the current server.
 This is helpful when trying to diagnose problems in logs and for referencing each server in multiple ways.
 ```
 
-Configuring the other two Nodes 
-SLAVE VM
+* Configuring the other two Nodes 
+* SLAVE VM
 ```
 =>sudo nano /etc/mysql/conf.d/galera.cnf
 => => Add the below details.
@@ -84,7 +84,7 @@ wsrep_sst_method=rsync
 wsrep_node_address="192.168.1.6"
 wsrep_node_name="Node_2"   
 ```
-THIRD-VM
+* THIRD-VM
 ```
 NEW VM -> Third(VM)
 
@@ -112,7 +112,7 @@ wsrep_sst_method=rsync
 wsrep_node_address="192.168.1.8"
 wsrep_node_name="Node_3"   
 ```
-Starting the Cluster
+* Starting the Cluster
 ```
 =>Stop MariaDB on All Three Servers => sudo systemctl stop mysql
 => Check status if active => sudo systemctl status mysql
@@ -130,7 +130,7 @@ Starting the Cluster
 
 (First Node is up)
 ```
-Starting the Cluster (Second Node)
+* Starting the Cluster (Second Node)
 
 ```
 =>sudo systemctl start mysql
@@ -142,7 +142,7 @@ Starting the Cluster (Second Node)
 +--------------------+-------+
 ```
 
-Starting the Cluster (Third Node)
+* Starting the Cluster (Third Node)
 ```
 =>sudo systemctl start mysql
 =>mysql -u root -p -e "SHOW STATUS LIKE 'wsrep_cluster_size'"
@@ -154,7 +154,7 @@ Starting the Cluster (Third Node)
 
 ```
 
-Login to MYSQL
+* Login to MYSQL
 ```
 =>mysql -u root -p
 => show databases;
@@ -164,7 +164,7 @@ Login to MYSQL
 => Would show the cluster members.
 ```
 
-The checksum for the table should not change
+* The checksum for the table should not change
 
 ```
 => The checksum value should not be 0.
