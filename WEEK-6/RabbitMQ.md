@@ -5,61 +5,78 @@ Support Streaming Text Oriented Messaging Protocol.
 ```
 
 ### INSTALLATION
+
+* Step1 ` Install Erlang` Rabbit MQ code implementation is done using Erlang dependencies.
+
 ```
-=> Step1 
-=> Install Erlang
-=> Rabbit MQ code implementation is done using Erlang dependencies.
+In the file (sudo nano /etc/apt/sources.list)
+=> Add this line at EOF.
+=>deb https://packages.erlang-solutions.com/ubuntu bionic contrib
+=>(Packages for erlang)
+```
 
-STEP-1	=>In the file (sudo nano /etc/apt/sources.list)
-		=> Add this line at EOF.
-		=>deb https://packages.erlang-solutions.com/ubuntu bionic contrib
-		=>(Packages for erlang)
-
-STEP-2	=>Create a file in the directory  (/etc/apt/preferences.d)
-                    =>sudo touch /etc/apt/preferences.d/erlang (erlang name of the file)
-                    =>sudo nano /etc/apt/preferences.d/erlang
- 
-
-STEP-3      => In the file created 
-                   => Mention these contents
-                   => (Package: erlang* esl-erlang
-		               Pin: version 1:21.3*
-                       Pin-Priority: 501)
+* STEP-2	
+```
+=>Create a file in the directory  (/etc/apt/preferences.d)
+=>sudo touch /etc/apt/preferences.d/erlang (erlang name of the file)
+=>sudo nano /etc/apt/preferences.d/erlang
+```
 
 
-STEP-4  =>Run these commands in the terminal.
+* STEP-3      
+```
+=> In the file created 
+=> Mention these contents
+=> (Package: erlang* esl-erlang
+            Pin: version 1:21.3*
+            Pin-Priority: 501)
+```
+* STEP-4 
+
+```
+  =>Run these commands in the terminal.
           1. wget https://packages.erlang-solutions.com/ubuntu/erlang_solutions.asc.
           2.sudo apt key add erlang_solutions.asc
           3.sudo apt-get update -y
           4.sudo apt-get install esl-erlang -y                           // Installs Erlang 
           5.sudo ln -s /usr/lib/erlang/bin/erl /usr/local/bin/erl.      //Symbolic link
-
-
-STEP-5     => Install RMQ 
+```
+* STEP-5 
+```
+             => Install RMQ 
                  =>In the file (sudo nano /etc/apt/sources.list)
                  => Add this line at EOF.
                  =>deb https://packagecloud.io/rabbitmq/rabbitmq-server/ubuntu/ bionic main
                  =>deb-src https://packagecloud.io/rabbitmq/rabbitmq-server/ubuntu/ bionic main
    
-		
-STEP-6.    => Add key-Repo =>sudo apt-key adv --keyserver "keyserver.ubuntu.com" --recv-keys"F6609E60DC62814E"  
+```
 
+* STEP-6.
+```     
+ => Add key-Repo =>sudo apt-key adv --keyserver "keyserver.ubuntu.com" --recv-keys"F6609E60DC62814E"  
+```
 
-STEP-7.   => Install additional erlang packages.
-                =>sudo apt-get install -y erlang-base \
+* STEP-7.
+```  
+=> Install additional erlang packages.
+=>sudo apt-get install -y erlang-base \
                         erlang-asn1 erlang-crypto erlang-eldap erlang-ftp erlang-inets \
                         erlang-mnesia erlang-os-mon erlang-parsetools erlang-public-key \
                         erlang-runtime-tools erlang-snmp erlang-ssl \
                         erlang-syntax-tools erlang-tftp erlang-tools erlang-xmerl
-
-
-STEP-8.   => Install Rabbitmq-server
-	      =>sudo apt install rabbitmq-server=3.7.9-1
 ```
+
+STEP-8.  
+```
+=> Install Rabbitmq-server
+=>sudo apt install rabbitmq-server=3.7.9-1
+```
+
+
 ### DATA-PERSISTENCE
-```
-=> Data should be persisted on disk
 
+* Data should be persisted on disk
+```
 => For this a durable queue was created and published the messages so that the messages persisted
     even when the App is stopped and restarted.
 
@@ -71,50 +88,54 @@ STEP-8.   => Install Rabbitmq-server
 => channel.basic_publish(exchange='', routing_key='raju', body='Hello World!')   
 
 ```
+
+
 ### CLUSTERS
+
+* Add 2 more nodes to the cluster without restarting RMQ service on first one.
+
+* STEP-1.  
 ```
-=>Add 2 more nodes to the cluster without restarting RMQ service on first one.
-
-=>For adding 2 more nodes. Two more Virtual Machines were created.
-
-
-STEP-1.  =>  Setup Hosts File.
+=>  Setup Hosts File.
 	     =>Edit the '/etc/hosts' file using nano editor.
                => sudo nano/etc/hosts.
                => At the EOF Add the following configuration.
                =>	192.168.1.14 bu1            // IP and user of VM-1
 		            192.168.1.15 bu2            //  IP and user of VM-2
-		            192.168.1.16 bu3            // IP and user of VM-3 
+		            192.168.1.16 bu3            // IP and user of VM-3
+        NOTE => Do this configuration on the other two Vm’s as well.
+```	
+* STEP-2 
 
-
-NOTE => Do this configuration on the other two Vm’s as well.
-
-
-STEP-2 => Enable RabbitMQ Management Plugins
-          
-           =>sudo rabbitmq-plugins enable rabbitmq_management
+```
+            Enable RabbitMQ Management Plugins
+            =>sudo rabbitmq-plugins enable rabbitmq_management
             =>sudo systemctl restart rabbitmq-server
-             
+```	    
 
-STEP-3 => Setup UFW Firewall.
+* STEP-3             
+```
+ Setup UFW Firewall.
           
           =>sudo ufw allow ssh
           =>sudo ufw enable
           => sudo ufw allow 5672,15672,4369,25672/tcp.   //New RMQ Ports.
           =>sudo ufw status
-
+```
 STEP-4 => Setup RabbitMQ Cluster
-
-          => In the directory => /var/lib/rabbitmq/.erlang.cookie
+```
+         => In the directory => /var/lib/rabbitmq/.erlang.cookie
          => Copy the key available in the file and copy it to the other 2 Vm’s as well
-            
+ ```           
 
+```
 STEP-5=>Run commands below on ‘bu2 (VM-2)’ and ‘bu3 (VM-3)’   
 
      =>sudo systemctl restart rabbitmq-server
      =>sudo rabbitmqctl stop_app
 
-
+```
+```
 STEP-6 => Now let RabbitMQ server on both nodes join the cluster on 'bu1', then start the app.
                    
 
@@ -124,9 +145,10 @@ STEP-6 => Now let RabbitMQ server on both nodes join the cluster on 'bu1', then 
      =>list running nodes.(sudo rabbitmqctl cluster_status --formatter=json | q -r .running_nodes[]
 
 	NOTE => Do this configuration on the  Third Vm as well. (Not at the First Vm)
+```
 
-OUTPUT => sudo rabbitmqctl cluster_status
-
+* OUTPUT => sudo rabbitmqctl cluster_status
+```
 Cluster status of node rabbit@bu1 ...
 [{nodes,[{disc,[rabbit@bu1,rabbit@bu2,rabbit@bu3]}]},
  {running_nodes,[rabbit@bu3,rabbit@bu2,rabbit@bu1]},
