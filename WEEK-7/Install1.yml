@@ -1,0 +1,60 @@
+ ---
+- name: RMQ
+  hosts: all4
+  become: true
+  become_method: sudo
+  tasks:
+
+    - name: Update repositories cache and install                                                                              // Before installing update system
+      apt:
+        update_cache: yes
+        cache_valid_time: 3600
+
+
+    - name: Add RMQ Keys                                                                                                         // Link to RMQ -officila Keys      
+      apt_key:
+        url: 'https://packagecloud.io/rabbitmq/rabbitmq-server/gpgkey'
+
+    - name: Add RMQ Repo                                                                                                        
+      apt_repository:
+        repo: deb https://packagecloud.io/rabbitmq/rabbitmq-server/ubuntu/ bionic main                                          // Adding Official Repo-1
+        state: present
+        filename: rabbitmq
+
+
+    - name: Add RMQ Repo-2
+      apt_repository:
+        repo: deb-src https://packagecloud.io/rabbitmq/rabbitmq-server/ubuntu/ bionic main                                     // Adding Official Repo-2 
+        state: present
+        filename: rabbitmq
+
+    - name: Update repositories cache and install                                                                             // Post adding the repos apt-update
+      apt:
+        update_cache: yes
+        cache_valid_time: 3600
+
+    - name: install extra Packages                                                                                          // Intalling Extra erlang packages                                                                                    
+      apt:
+        name:
+          - erlang-base
+          - erlang-asn1
+          - erlang-crypto
+          - erlang-eldap
+          - erlang-ftp
+          - erlang-inets
+          - erlang-mnesia
+          - erlang-os-mon
+          - erlang-parsetools
+          - erlang-public-key
+          - erlang-runtime-tools
+          - erlang-snmp
+          - erlang-ssl
+          - erlang-syntax-tools
+          - erlang-tftp
+          - erlang-tools
+          - erlang-xmerl
+
+    - name: Install RMQ Packages                                                                                           // Installing specific version of RMQ
+      apt:
+        update_cache: True
+        name: rabbitmq-server=3.7.9-1
