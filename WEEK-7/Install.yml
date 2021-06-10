@@ -29,7 +29,7 @@
         src: "raju1.j2"                                                                                                     // Source=> file name created    
         dest: "/etc/apt/preferences.d/erlang"                                                                               // Destination=> location the file to be stored
 
-    - name: Install Erlang Packages                                                                                         // Installing Erlang
+    - name: Install Erlang Packages                                                                                        // Installing Erlang
       apt:
         name:
           - erlang
