@@ -88,3 +88,14 @@
         ],
         "type": "shell"
     }]
+    
+  
+    Shell Scripts to add user.
+#!/bin/bash -eux
+
+adduser kanaka
+sleep 3                     //adduser.sh
+echo hi
+    
+
+    
