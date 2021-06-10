@@ -15,3 +15,4 @@
 * Deploy the docker container that you created in #1 to run as a Marathon app and it should be reachable using the Traefik
 
 * Setup VM4, install Nginx on it. Create a self-signed SSL Certificate and set up a proxy using Nginx which listens on port 443 with SSL enabled and forwards the requests to Traefik
+
