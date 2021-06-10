@@ -1,0 +1,35 @@
+---                                                                                                                        // Indicates starting of yml file ---
+- name: Erlang                                                                                                             // name: specifiying (Erlang) 
+  hosts: all4                                                                                                                       
+  become: true                                                                                                          
+  become_method: sudo                                                                                                      // Run as root user      
+  tasks:                                                                                                                   //  Tasks to be completed under Tasks  
+
+    - name: Update repositories cache and install                                                                          // Similar to command apt-update 
+      apt:
+        update_cache: yes
+        cache_valid_time: 3600
+
+    - name: Adding erlang keys                                                                                              // Adding Erlang keys
+      command: apt-key adv --fetch-keys 'https://packages.erlang-solutions.com/debian/erlang_solutions.asc'
+
+
+#    - name: Verify Python is Installed                                                                                     // This is optional to check python packages
+#      apt: pkg=python-software-properties state=present
+
+
+    - name: Add erlang official Repo                                                                                        // Adding Erlang repository
+      apt_repository:
+        repo: deb https://packages.erlang-solutions.com/ubuntu bionic contrib
+        state: present
+        filename: erlang
+
+    - name: Copy the version file                                                                                           // The above created file in the previous step
+      template:                                                                                                            
+        src: "raju1.j2"                                                                                                     // Source=> file name created    
+        dest: "/etc/apt/preferences.d/erlang"                                                                               // Destination=> location the file to be stored
+
+    - name: Install Erlang Packages                                                                                         // Installing Erlang
+      apt:
+        name:
+          - erlang
