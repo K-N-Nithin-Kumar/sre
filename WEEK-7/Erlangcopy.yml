@@ -1,0 +1,24 @@
+--
+- name: Cookie
+  hosts: all2      // all3                                                                                              // To be replicated on VM-2 and VM-3              
+  become: true
+  become_method: sudo
+  tasks:
+    - name: backup old erlang cookie                                                                                    // Copied the old erlang cookie to a file .erlang.cookie.old 
+      shell: cp -a /var/lib/rabbitmq/.erlang.cookie /var/lib/rabbitmq/.erlang.cookie.old                                // as a backup 
+      changed_when: false
+
+    - name: updating rabbitmq erlang cookie                                                                              // The file created above raju3.j2 
+      template:                                                                                                          // Erlang cookie being replicated.
+        src: raju3.j2
+        dest: /var/lib/rabbitmq/.erlang.cookie
+
+    - meta: flush_handlers
+
+    - name: remove old erlang cookie                                                                                    // For safety purposes deleted the old erlang cookie 
+      file:                                                                                                             // Which might cause trouble in clustering
+        path: /var/lib/rabbitmq/.erlang.cookie.old
+        state: absent
+      changed_when: false
+
+
