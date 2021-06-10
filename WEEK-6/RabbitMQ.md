@@ -306,7 +306,7 @@ channel.queue_declare(queue='DATA',arguments = {"x-message-ttl" : 60000,
                                                 "x-dead-letter-exchange" : '' ,
                                                 "x-dead-letter-routing-key" : 
                                                  "DATA_SIDELINE" } )
- => The TTL was set and DATA_SIDELINE Queue is mentioned because it should forward to the particular queue.
+ => The TTL was set and DATA_SIDELINE Queue is mentioned because it should've forward to the particular queue.
  
  ```
 
