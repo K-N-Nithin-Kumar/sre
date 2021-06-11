@@ -41,11 +41,14 @@
 
  - name: Add monitoring user
       rabbitmq_user:                               // raju3 is the user created with password raju3 with monitoring access.
-        user: raju3
-        password: raju3
-       permissions:
+      
+        user: raju3  
+         password: raju3                                Why monitorng access?
+                                                      View other users's connections and channels
+                                                     View node-level data such as memory use and clustering
+          permissions:                               View truly global statistics for all virtual hosts permissions:
           - vhost: /
-            configure_priv: .* 
+            configure_priv: .*         
             read_priv: .* 
             write_priv: .*
             tags: monitoring                       // tags: monitoring          
