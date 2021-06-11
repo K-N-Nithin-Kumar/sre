@@ -1,0 +1,68 @@
+---
+- name: RMQ
+  hosts: all2 //all 3
+  become: true
+  become_method: sudo
+  tasks:
+  - name: stop rabbitmq app                       // Before adding the rabbitmq app was stopped in both VM-2 and VM-3
+    command: rabbitmqctl stop_app
+
+  - name: stop rabbitmq app
+    command: rabbitmqctl stop_app
+
+ - name: add this node to cluster                  // Command to join the cluster named "rabbit@ans22" on the Vm's Vm-2 and VM-3
+   command: rabbitmqctl join_cluster rabbit@ans22
+
+  - name: start rabbitmq app
+    command: rabbitmqctl start_app
+    
+  - name: Enables the rabbitmq_management plugin      // Command to enable management plugin. 
+                                                      // Post enabling this the guest can login in the Application UI ( via Vm-1 Bridged adapter IP)
+                                                      In the browser (192.168.43.60:15672)   => 
+                                                      login as guest for now since users have not been added
+    rabbitmq_plugin:
+        names: rabbitmq_management
+      state: enabled
+      
+  
+ - name: add vhost 
+   rabbitmq_host:
+       name: kanakaraju                             // Adding Vhost named kanakaraju
+       state: present
+
+ - name: Add user
+     rabbitmq_user:
+        user: raju5
+        password: raju5                            // The user named raju5 was added under Vhost and had Read and Write priviliges
+        vhost: kanakaraju
+        read_priv: .*
+        write_priv: .*
+        state: present
+
+ - name: Add monitoring user
+      rabbitmq_user:                               // raju3 is the user created with password raju3 with monitoring access.
+        user: raju3
+        password: raju3
+       permissions:
+          - vhost: /
+            configure_priv: .* 
+            read_priv: .* 
+            write_priv: .*
+            tags: monitoring                       // tags: monitoring          
+            state: present
+   - name: Adding RabbitMQ queues.
+    rabbitmq_queue:
+      name: Queue1
+      durable: yes                                // Creating the queue as 'Queue-1' and setting the durable =yes
+      login_user: raju5
+      login_password: raju5
+  
+  
+  - name: Publish a message
+   - rabbitmq_publish:
+       url: "amqp://raju5:raju5@192.168.43.35:5672/kanakaraju"                   // Queue1 location and the Vhost name
+       queue: 'Queue1'
+       body: "Hello world from ansible module rabbitmq_publish"                  // Publish some message.
+       content_type: "text/plain"
+       headers:
+         myHeader: myHeaderValue
