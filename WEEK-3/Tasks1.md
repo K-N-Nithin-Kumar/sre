@@ -1,10 +1,6 @@
 # NETWORKING
 
-TASK-1
-=>Bridge connectivity or L2 connectivity:
-- Create two VMs, assign an IP from the same /24 subnet and establish connectivity between those two VMs
-- Test for connectivity: two VMs should be able to ping each other.
-
+> TASK-1
 ```
 For this particular task. 
 NAT-ADAPTER was added where the desired subnet of Ip's was given
@@ -37,13 +33,8 @@ In the client Vm => ping 192.168.1.4 (Vm-1 Server's IP address)
 => If sucessfull they should be able to transfer data packets to and fro with 0% packet loss.
 => Sucessful connection was established because they were in the NAT-NETWORK State and were able to ping each other. (STATICTALLY Routing was done)
 ```
-TASK-2
-- Create 3 VMs and establish connectivity in following manner,
-VM1 <-> VM2
-VM3 <-> VM2
-VM1<->VM3 ( via VM2 as router )
-Test: same as #1
 
+TASK-2
 ```
 For this particular task.
 => 3 New Vm's was Initialized where'in they were named as (CLIENT) (ROUTER) (SERVER)
@@ -58,7 +49,7 @@ For this particular task.
 
 => The IP adresses for all the Vm's was assigned and configured via netplan configuration.
 ```
-CLIENT
+> CLIENT
 ```
 => In the client Vm =>
                     => network:
@@ -76,7 +67,7 @@ CLIENT
 
 this is done at => sudo nano /etc/netplan/00-config.yaml (client)
 ```
-ROUTER
+> ROUTER
 ```
 =>In the Router Vm =>
                    => network:
@@ -105,7 +96,7 @@ ROUTER
 
 this is done at => sudo nano /etc/netplan/00-config.yaml (router)
 ```
-SERVER
+> SERVER
 
 ```
 
@@ -126,7 +117,7 @@ SERVER
 this is done at => sudo nano /etc/netplan/00-config.yaml (Server)
 ```
 
-TESTING THE CONNECTIVITY
+> TESTING THE CONNECTIVITY
 ```
 
 =>Post adding these all netplan configurations in all the 3 Vm's 
@@ -155,13 +146,7 @@ TESTING THE CONNECTIVITY
 => Preferably these Vm's should be supposed to Ping each other with (0% packet loss)
 ```
 
-TASK-3
-- Create 3 VMs and connect them as #2
-- Router VM (i.e VM2) will accept connections on its own IP and port 2222 and forward the packets to VM3 on port 22
-example: 
-VM1 connects to  VM2 port 2222
-VM2 forwards the traffic to VM3 port 22
-Result, VM1 is connected to VM3`s port 22 ( via VM2`s port 2222)
+> TASK-3
 
 ```
 
