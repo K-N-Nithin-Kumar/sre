@@ -2,6 +2,13 @@
   
 # TASKS
 
+| VM-NAME | IP'S         | 
+|---------|--------------|
+| VM-1    | 192.168.43.154 |   
+| VM-2    | 192.168.43.182 |   
+| VM-3    | 192.168.43.32  |   
+| VM-4    | 192.168.43.125 |  
+
 * Create a Docker container running a python webserver, that listens on port 80 and returns the string "Hello world" for any requests
 
 * Create three VMs and setup the following,
