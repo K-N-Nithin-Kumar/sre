@@ -114,8 +114,63 @@
    
     
     
+* MESOS SLAVE
 
-       
-         
+> For Mesos-Slave
+
+* Enable some configurations and add some files in the `VM-2`
+* Only some slave package dependencies were installed there is no requirement of zookeeper too in slave side. But slave sometimes depends on zookeeper too
+
+```
+Install Packages and Dependencies.
+sudo apt-get update
+
+=> sudo apt install -y openjdk-11-jre-headless
+
+=>sudo apt-get -y install build-essential python3-dev python3-six python3-virtualenv libcurl4-nss-dev libsasl2-dev libsasl2-modules maven libapr1-dev libsvn-dev zlib1g-dev iputils-ping
+
+=>sudo apt-get install -y libcurl4-openssl-dev
+
+=>sudo apt install -y libevent-dev
+```
+
+> Install mesos
+`sudo dpkg -i mesos-1.9.0-0.1.20200901105608.deb`
+
+> Configure ZooKeeper connection info to point to the master servers
+> In the file `sudo nano /etc/mesos/zk`
+```
+zk://<IP OF VM Linked>:2181/mesos
+```
+
+> Zookeeper is not required at the slave side to it's better to force disable them
+```
+sudo service zookeeper stop
+sudo sh -c "echo manual > /etc/init/zookeeper.override"
+```
+> Mesos-Master is also not required so better force disable them
+```
+sudo service mesos-master stop
+sudo sh -c "echo manual > /etc/init/mesos-master.override"
+```
+
+> set the IP address and hostname in `/etc/mesos-slave dir`
+
+```
+echo \<VM's IP\> | sudo tee /etc/mesos-slave/ip
+sudo cp /etc/mesos-slave/ip /etc/mesos-slave/hostname
+```
+
+> Post doing this restart slave
+```
+sudo service mesos-slave restart
+```
+
+> Post doing these configuration point the browser to => `http://192.168.43.154:5050` and check the slave under `agents` tab
+
+
+
+
+
             
          
