@@ -51,6 +51,20 @@ $ docker run -d \
    --name traefik \
     traefik:v2.4
 ```
+# Configure Traefik to get its data from Marathon
+
+* In the `traefik.toml` file these particular lines were appended.
+```
+[providers.marathon]
+  endpoint = "http://192.168.43.154:8080"
+  exposedByDefault = true
+  watch = true
+  respectReadinessChecks = true
+```  
+  
+
+
+
 
 
 
