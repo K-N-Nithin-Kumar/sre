@@ -1,4 +1,4 @@
-In above file entrypoint web handles port 80 while entrypoint websecure handle port 443 for SSL/TLS connection
+In the file entrypoint web handles port 80 while entrypoint websecure handle port 443 for SSL/TLS connection
 [entryPoints]
   [entryPoints.web]
     address = ":80"
