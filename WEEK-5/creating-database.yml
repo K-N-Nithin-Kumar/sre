@@ -1,0 +1,29 @@
+---
+---                                                                                                         // Indicates starting of yml file ---
+- name: Install                                                                                             // name: specifiying 
+  hosts: all                                                                                                                      
+  become: true                                                                                                          
+  become_method: sudo                                                                                     // Run as root user      
+  tasks:                                                                                                  //  Tasks to be completed under Tasks Section 
+  become: yes
+  vars: 
+    mysql_root_password: 'raju'
+  tasks:
+  - name: update mysql root password for all root accounts 
+    mysql_user:  
+      name: root  
+      host: group
+      password: "{{ mysql_root_password }}"
+      login_user: root
+      login_password: "{{ mysql_root_password }}"
+      check_implicit_admin: yes
+      priv: "*.*:ALL,GRANT"  
+  - name: create databse Nginx and dump file
+    mysql_db: name=Nginx state=present login_user=root login_password="{{ mysql_root_password }}"
+  - name: insert sql file into database
+    mysql_db: name=Nginx state=import target=/home/kanaka_intern/ngnix_access_log.sql login_user=root login_password="{{ mysql_root_password }}"
+
+
+
+
+=> yml file for creating database
