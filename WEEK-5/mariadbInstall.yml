@@ -1,5 +1,5 @@
 ---                                                                                                         // Indicates starting of yml file ---
-- name: Erlang                                                                                             // name: specifiying (Erlang) 
+- name: Install                                                                                             // name: specifiying (Erlang) 
   hosts: all4                                                                                                                       
   become: true                                                                                                          
   become_method: sudo                                                                                     // Run as root user      
