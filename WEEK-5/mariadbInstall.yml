@@ -1,5 +1,5 @@
 ---                                                                                                         // Indicates starting of yml file ---
-- name: Install                                                                                             // name: specifiying (Erlang) 
+- name: Install Mariadb                                                                                         // name: Mariadb
   hosts: all4                                                                                                                       
   become: true                                                                                                          
   become_method: sudo                                                                                     // Run as root user      
