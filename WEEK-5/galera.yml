@@ -1,23 +1,33 @@
 ---
-- hosts: group
-  become: yes
-  tasks:
-  - name: stop service mariadb, if running
+---                                                                                                         // Indicates starting of yml file ---
+- name: Install                                                                                             // name: specifiying (Erlang) 
+  hosts: all4                                                                                                                       
+  become: true                                                                                                          
+  become_method: sudo                                                                                     // Run as root user      
+  tasks:                                                                                                  //  Tasks to be completed under Tasks Section 
+    tasks:
+    - name: stop service mariadb, if running             // Before adding clusters stop mariadb service
     service:
       name: mariadb
-      state: stopped
-- hosts: router
+
+
+
+
+
+
+state: stopped
+- hosts: all
   become: yes
   tasks:
-  - name: Execute galera new cluster
-    shell: sudo galera_new_cluster  
+  - name: Execute galera new cluster                      
+    shell: sudo galera_new_cluster                     // Add this in the `sudo` command to bring cluster up
 - hosts: VM1
   become: yes
   tasks:
   - name: start service mariadb, if not running
     service:
       name: mariadb
-      state: started
+      state: started                                   // start mariadb service
 - hosts: VM2
   become: yes
   tasks:
