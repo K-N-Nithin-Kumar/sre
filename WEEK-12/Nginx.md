@@ -72,7 +72,7 @@
  # 2. Install nginx
  # 1. Install nginx
 
- ```
+
  > sudo apt-get update
 
 # Install nginx
