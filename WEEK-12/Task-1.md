@@ -51,7 +51,6 @@ Docker running locally
 For this flask application was installed
 
 mkdir ~/python-docker
-cd /home/neha/python-docker
 pip3 install Flask
 pip3 freeze > requirements.txt
 ```
