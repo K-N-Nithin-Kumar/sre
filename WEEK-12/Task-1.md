@@ -127,7 +127,7 @@ docker run python-docker
 
 > `docker run -d -p 80:5000 python-docker` listens on port 80 and hosted at port 5000
 
-> `-d` makes the application to be run without the logs, -p is for specifying which port of the host does image uses to provide access for application
+> `-d` makes the application to be run in detatched mode, -p is for specifying which port of the host does image uses to provide access for application
 
 
 
