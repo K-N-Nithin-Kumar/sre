@@ -71,6 +71,10 @@ STEP-8.
 => Install Rabbitmq-server
 =>sudo apt install rabbitmq-server=3.7.9-1
 ```
+STEP-9.
+```
+=> To enabale RMQ's Dashboard.
+-> rabbitmq-plugins enable rabbitmq_management
 
 
 ### DATA-PERSISTENCE
