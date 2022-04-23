@@ -75,7 +75,7 @@ STEP-9.
 ```
 => To enabale RMQ's Dashboard.
 -> rabbitmq-plugins enable rabbitmq_management
-
+```
 
 ### DATA-PERSISTENCE
 
