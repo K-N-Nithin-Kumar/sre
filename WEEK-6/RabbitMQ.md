@@ -36,7 +36,7 @@ In the file (sudo nano /etc/apt/sources.list)
 ```
   =>Run these commands in the terminal.
           1. wget https://packages.erlang-solutions.com/ubuntu/erlang_solutions.asc.
-          2.sudo apt key add erlang_solutions.asc
+          2.sudo apt-key add erlang_solutions.asc
           3.sudo apt-get update -y
           4.sudo apt-get install esl-erlang -y                           // Installs Erlang 
           5.sudo ln -s /usr/lib/erlang/bin/erl /usr/local/bin/erl.      //Symbolic link
