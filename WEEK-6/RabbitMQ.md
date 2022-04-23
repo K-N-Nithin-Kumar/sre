@@ -75,6 +75,7 @@ STEP-9.
 ```
 => To enabale RMQ's Dashboard.
 -> rabbitmq-plugins enable rabbitmq_management
+-> The RabbitMQ management plugin provides an HTTP-based API that can be used to monitor and manage RabbitMQ nodes and clusters through a web browser. By default, it is running on the TCP port 15672.
 ```
 
 ### DATA-PERSISTENCE
