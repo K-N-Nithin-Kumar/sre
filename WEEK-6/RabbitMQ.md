@@ -234,7 +234,7 @@ def main():
     parameters = pika.ConnectionParameters("192.168.43.102", "5672", "kanakaraju", credentials=credentials)
     connection = pika.BlockingConnection(parameters)
     channel = connection.channel()
-    channel.exchange_declare(exchange='logs', exchange_type='fanout')                          // Exchangeg type is fanout
+    channel.exchange_declare(exchange='logs', exchange_type='fanout')                          // Exchange type is fanout
     channel.queue_declare(queue='DATA')                                                        // The queue will be created by not created Before
     channel.queue_bind(exchange='logs', queue='DATA')
     def callback(ch, method, properties, body):                                                // Declaring function callback
